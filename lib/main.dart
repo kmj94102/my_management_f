@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:my_management_f/ui/home/home.dart';
+import 'package:my_management_f/ui/other/other.dart';
+import 'package:my_management_f/ui/schedule/schedule.dart';
+import 'package:my_management_f/ui/transportation/transportation.dart';
+import 'package:my_management_f/util/common_util.dart';
+import 'package:my_management_f/util/my_color.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'key/api_key.dart';
 
@@ -40,30 +47,74 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectIndex = index;
+    });
+  }
+
+  static const List<Widget> _widgets = <Widget>[
+    HomeScreen(),
+    TransportationScreen(),
+    ScheduleScreen(),
+    OtherScreen()
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: OutlinedButton(
-                  onPressed: () async {
-                    try {
-                      OAuthToken token =
-                          await UserApi.instance.loginWithKakaoAccount();
-                      print('카카오톡으로 로그인 성공 ${token.accessToken}');
-                      User user = await UserApi.instance.me();
-                      print('닉네임 ${user.kakaoAccount?.profile?.nickname}');
-                    } catch (error) {
-                      print('카카오톡으로 로그인 실패 $error');
-                    }
-                  },
-                  child: const Text('kakao login')),
-            )
-          ],
-        ),
+      backgroundColor: MyColor.white,
+      body: Center(
+        child: _widgets.elementAt(_selectIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                '$imagesAddress/ic_home.svg',
+                width: 27,
+                height: 27,
+                color: _selectIndex == 0 ? MyColor.green : MyColor.gray,
+              ),
+              label: "홈"),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                '$imagesAddress/ic_transportation.svg',
+                width: 27,
+                height: 27,
+                color: _selectIndex == 1 ? MyColor.green : MyColor.gray,
+              ),
+              label: "교통"),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                '$imagesAddress/ic_calendar.svg',
+                width: 27,
+                height: 27,
+                color: _selectIndex == 2 ? MyColor.green : MyColor.gray,
+              ),
+              label: "일정"),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                '$imagesAddress/ic_other.svg',
+                width: 27,
+                height: 27,
+                color: _selectIndex == 3 ? MyColor.green : MyColor.gray,
+              ),
+              label: "기타"),
+        ],
+        selectedItemColor: MyColor.green,
+        unselectedItemColor: MyColor.gray,
+        backgroundColor: MyColor.white,
+        currentIndex: _selectIndex,
+        onTap: _onItemTapped,
+        showUnselectedLabels: true,
       ),
     );
   }
