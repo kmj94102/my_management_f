@@ -9,6 +9,6 @@ class MyColor {
   static const MaterialColor red = MaterialColor(0xFFF7A4A4, {});
   static const MaterialColor black = MaterialColor(0xFF17181D, {});
   static const MaterialColor white =
-      MaterialColor(0xFFFAFAFA, {50: Color(0x80FAFAFA)});
+      MaterialColor(0xFFFAFAFA, {50: Color(0x80FAFAFA), 30: Color(0x4DFAFAFA)});
   static const MaterialColor gray = MaterialColor(0xFFCECECE, {});
 }

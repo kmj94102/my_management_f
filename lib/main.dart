@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:my_management_f/ui/home/home.dart';
 import 'package:my_management_f/ui/other/other.dart';
@@ -65,6 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: MyColor.white,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark));
   }
 
   @override
