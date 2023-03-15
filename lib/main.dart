@@ -8,10 +8,11 @@ import 'package:my_management_f/ui/transportation/transportation.dart';
 import 'package:my_management_f/util/common_util.dart';
 import 'package:my_management_f/util/my_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import 'key/api_key.dart';
 
-void main() {
+void main() async {
   // 웹 환경에서 카카오 로그인을 정상적으로 완료하려면 runApp() 호출 전 아래 메서드 호출 필요
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -19,6 +20,8 @@ void main() {
   KakaoSdk.init(
     nativeAppKey: nativeAppKey,
   );
+  WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
+  await FlutterConfig.loadEnvVariables();
 
   runApp(const MyApp());
 }
@@ -74,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(FlutterConfig.get('API_KEY'));
     return Scaffold(
       backgroundColor: MyColor.white,
       body: Center(
